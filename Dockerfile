@@ -3,12 +3,14 @@ MAINTAINER smarconi@siu.edu.ar
 
 
 RUN apt-get update \
-	&& apt-get install -y memcached nodejs npm \
+	&& apt-get install -y nodejs npm \
 	&& apt-get install -y libldap2-dev libgmp-dev zlib1g-dev libicu-dev g++ \
 	&& apt-get install -y libssl-dev libc-client2007e-dev libkrb5-dev \
 	&& apt-get install -y \php-pear curl libmemcached-dev zlib1g-dev libncurses5-dev \
 
     && docker-php-ext-install intl \
+
+	&& docker-php-ext-install pdo_mysql \
 
 	&& docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap \

@@ -1,0 +1,37 @@
+## INSTALACION de Memcached y portal
+
+data:
+  image: postgres:9.4
+  command: true
+  volumes:
+   - ./docker-data/pgdata:/var/lib/postgresql/data
+   - ./docker-data/instalacion:/var/local/portal/docker-data/instalacion
+
+
+postgres:
+  image: postgres:9.4
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+  volumes_from:
+   - data
+
+
+memcached:
+  #build: .
+  image: memcached:latest
+  ports:
+   - "11211"
+
+portal:
+  image: siutoba/docker-portal:latest
+  links:
+   - memcached
+  ports:
+   - "5000:80"
+  volumes_from:
+   - data
+  volumes:
+   - ./:/var/local/portal
+
+
