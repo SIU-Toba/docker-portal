@@ -4,11 +4,13 @@ data:
   image: postgres:9.4
   command: true
   volumes:
-   - ./docker-data/pgdata:/var/lib/postgresql/data
+#Descomentar para publicar postgres en una carpeta del host (y sobrevivir a la eliminacion del container)
+#   - ./docker-data/pgdata:/var/lib/postgresql/data
+   - /var/lib/postgresql/data
    - ./docker-data/instalacion:/var/local/portal/docker-data/instalacion
 
 
-postgres:
+pg:
   image: postgres:9.4
   environment:
     POSTGRES_USER: postgres
@@ -18,15 +20,14 @@ postgres:
 
 
 memcached:
-  #build: .
   image: memcached:latest
-  ports:
-   - "11211"
+
 
 portal:
   image: siutoba/docker-portal:latest
   links:
    - memcached
+   - pg
   ports:
    - "5000:80"
   volumes_from:
