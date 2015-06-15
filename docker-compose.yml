@@ -7,7 +7,9 @@ data:
 #Descomentar para publicar postgres en una carpeta del host (y sobrevivir a la eliminacion del container)
 #   - ./docker-data/pgdata:/var/lib/postgresql/data
    - /var/lib/postgresql/data
-   - ./docker-data/instalacion:/var/local/portal/docker-data/instalacion
+
+#TODO: esto deberia existir para mantener los configs, logs y cache accesibles desde el host
+#  - ./docker-data/instalacion:/var/local/portal/docker-data/instalacion
 
 
 pg:
@@ -18,10 +20,8 @@ pg:
   volumes_from:
    - data
 
-
 memcached:
   image: memcached:latest
-
 
 portal:
   image: siutoba/docker-portal:latest
@@ -34,5 +34,7 @@ portal:
    - data
   volumes:
    - ./:/var/local/portal
+  environment:
+   SYMFONY_ENV: dev
 
 

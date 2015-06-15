@@ -11,21 +11,18 @@ Contenedor Docker para crear entorno de desarrollo de SIU-Portal
 git clone URL_PORTAL portal
 cd portal
 ```
-
-* Copiar el archivo `docker-compose.yml` hacia la raiz del portal
+* Descargar el archivo `docker-compose.yml` e incluirlo en la raiz del portal
 * Levantar los containers usando *docker-compose*:
 ```
 docker-compose up
 ```
+* Navegar hacia <http://localhost:5000/portal>
 
-Alternativamente se pueden levantar los containers uno a uno:
-```
-#Arrancar memcached
-docker run --name portal-memcached -d memcached
-#Arrancar portal
-docker run --name portal-web --link portal-memcached:latest -p "5000:80" siutoba/docker-portal
-```
 
+## Notas
+
+ * En MacOSX o Windows reemplazar localhost por la ip de boot2docker: `boot2docker ip`
+ * Para volver a ejecutar la instalación, borrar el archivo `INSTALLED` y ejecutar nuevamente `docker-compose up`
 
 
 ## Build
