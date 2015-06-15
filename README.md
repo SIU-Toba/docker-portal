@@ -11,7 +11,7 @@ Contenedor Docker para crear entorno de desarrollo de SIU-Portal
 git clone URL_PORTAL portal
 cd portal
 ```
-* Descargar el archivo `docker-compose.yml` e incluirlo en la raiz del portal
+* Descargar el archivo [docker-compose.yml](docker-compose.yml) e incluirlo en la raiz del portal
 * Levantar los containers usando *docker-compose*:
 ```
 docker-compose up
