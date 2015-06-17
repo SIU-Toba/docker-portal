@@ -33,8 +33,9 @@ portal:
   volumes_from:
    - data
   volumes:
-   - ./:/var/local/portal
+   - portal-core/:/var/local/portal/portal-core
   environment:
    SYMFONY_ENV: dev
+   PORTAL_IDP_URL: http://localhost:4001/siu-arai-usuarios-idp
 
 

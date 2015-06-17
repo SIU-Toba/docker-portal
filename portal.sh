@@ -2,33 +2,31 @@
 #Se espera que haya un volumen compartido con el codigo en /var/local/portal
 
 function replace_in_file {
-	sed "s/$1/$2/" "$3" > "$3.tmp"
-	mv "$3" "$3.old"
-	mv "$3.tmp" "$3"
+	sed "s/$1/$2/" "$3" > "$3.new"
+	mv "$3.new" "$3"
 }
 
 
-PATH_PORTAL=/var/local/portal
-if [ ! -d "$PATH_PORTAL/app" ]; then
-	echo "Falta cargar el volumen en /var/local/portal"
+PORTAL_CORE_PATH=/var/local/portal/portal-core
+if [ ! -d "$PORTAL_CORE_PATH/app" ]; then
+	echo "Falta cargar el volumen en $PORTAL_CORE_PATH"
 fi
 if [ -z "$SYMFONY_ENV" ]; then
     export SYMFONY_ENV=dev;
 fi
-
 echo "Usando SYMFONY_ENV=$SYMFONY_ENV"
 
-if [ -f "$PATH_PORTAL/INSTALLED" ]; then
+if [ -f "$PORTAL_CORE_PATH/INSTALLED" ]; then
     PORTAL_INSTALLED=true
 else
     PORTAL_INSTALLED=false
 fi
 
-cd $PATH_PORTAL
+cd $PORTAL_CORE_PATH
 
 if ! $PORTAL_INSTALLED; then
 
-    PATH_PARAMETERS="$PATH_PORTAL/app/config/parameters.yml"
+    PATH_PARAMETERS="$PORTAL_CORE_PATH/app/config/parameters.yml"
     if [ ! -f "$PATH_PARAMETERS" ]; then
         echo "Generando app/config/parameters.yml..."
         cp "$PATH_PARAMETERS.dist" "$PATH_PARAMETERS"
@@ -48,19 +46,27 @@ if ! $PORTAL_INSTALLED; then
     fi
 
     echo "Instalando Portal..."
-    cd $PATH_PORTAL/bin
+    cd $PORTAL_CORE_PATH/bin
     ./console doctrine:database:create
     ./console doctrine:schema:update --force
     ./console assetic:dump
+    ./console simplesamlphp:config
 
-    #Publicar en /portal
-    ln -s /var/local/portal/web /var/www/html/portal
+	#Si se le pasa PORTAL_IDP_URL, registra esa url como IDP
+	if [ ! -z "$PORTAL_IDP_URL" ]; then
+		sed -i "s|{{idp_url}}|$PORTAL_IDP_URL|" $PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php
+	fi
+
+    ### TODO: Publicar vhost nuevo?
+    #Publicar en DocumentRoot
+    rm -rf /var/www/html
+    ln -s /var/local/portal/portal-core/web /var/www/html
 
     ### TODO: Estas carpetas (y app/config) deberian estar fuera del codigo, asi se pueden montar en docker-data y separar dato de codigo
     #Permite guardar logs y cache
-    #chown -R www-data $PATH_PORTAL/var/cache $PATH_PORTAL/var/logs
+    chown -R www-data $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
     #Permite al usuario HOST editar los archivos
-    #chmod -R a+w $PATH_PORTAL/var/cache $PATH_PORTAL/var/logs
+    chmod -R a+w $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
 
-    touch $PATH_PORTAL/INSTALLED
+    touch $PORTAL_CORE_PATH/INSTALLED
 fi

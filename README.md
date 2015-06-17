@@ -6,24 +6,24 @@ Contenedor Docker para crear entorno de desarrollo de SIU-Portal
 
 ## Ejecución
 
-* Descargar el portal y entrar en la carpeta 
+* Descargar el portal-core (branch `desarrollo-siu`): 
 ```
-git clone URL_PORTAL portal
-cd portal
+git clone -b desarrollo-siu http://gitlab.siu.edu.ar/siu-portal/portal-core.git
 ```
-* Descargar el archivo [docker-compose.yml](docker-compose.yml) e incluirlo en la raiz del portal
+* Descargar el archivo [docker-compose.yml](docker-compose.yml)
 * Levantar los containers usando *docker-compose*:
 ```
 docker-compose up
 ```
-* Navegar hacia <http://localhost:5000/portal>
+* Navegar hacia <http://localhost:5000>
 
 
 ## Notas
 
  * En MacOSX o Windows reemplazar localhost por la ip de boot2docker: `boot2docker ip`
  * Para volver a ejecutar la instalación, borrar el archivo `INSTALLED` y ejecutar nuevamente `docker-compose up`
-
+ * Se puede modificar el puerto en el `docker-composer.yml`
+ 
 
 ## Build
 Hay un archivo `portal.sh` que contiene el script de instalación del portal, ante cualquier cambio a este script (o al Dockerfile), ejecutar lo siguiente para re-generar la imagen 
