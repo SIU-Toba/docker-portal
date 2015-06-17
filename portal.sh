@@ -50,7 +50,6 @@ if ! $PORTAL_INSTALLED; then
     ./console doctrine:database:create
     ./console doctrine:schema:update --force
     ./console assetic:dump
-    ./console simplesamlphp:config
 
 	#Si se le pasa PORTAL_IDP_URL, registra esa url como IDP
 	if [ ! -z "$PORTAL_IDP_URL" ]; then

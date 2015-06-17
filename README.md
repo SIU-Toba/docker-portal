@@ -6,11 +6,15 @@ Contenedor Docker para crear entorno de desarrollo de SIU-Portal
 
 ## Ejecución
 
+* Clonar este proyecto y entrar:
+```
+git clone https://github.com/SIU-Toba/docker-portal.git
+cd docker-portal
+```
 * Descargar el portal-core (branch `desarrollo-siu`): 
 ```
 git clone -b desarrollo-siu http://gitlab.siu.edu.ar/siu-portal/portal-core.git
 ```
-* Descargar el archivo [docker-compose.yml](docker-compose.yml)
 * Levantar los containers usando *docker-compose*:
 ```
 docker-compose up
