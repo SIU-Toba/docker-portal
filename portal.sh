@@ -6,7 +6,7 @@ function replace_in_file {
 }
 
 
-PORTAL_CORE_PATH=/var/local/portal-core
+export PORTAL_CORE_PATH=/var/local/portal-core
 if [ ! -d "$PORTAL_CORE_PATH/app" ]; then
 	echo "Falta cargar el volumen en $PORTAL_CORE_PATH"
 fi
@@ -52,8 +52,12 @@ if ! $PORTAL_INSTALLED; then
 
 	#Si se le pasa PORTAL_IDP_URL, registra esa url como IDP
 	if [ ! -z "$PORTAL_IDP_URL" ]; then
-		sed -i "s|{{idp_url}}|$PORTAL_IDP_URL|" $PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php
+	    replace_in_file "{{idp_url}}" "$PORTAL_IDP_URL" "$PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
+	    replace_in_file "{{idp_url}}" "$PORTAL_IDP_URL" "$PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/config/authsources.php"
 	fi
+
+	#Falta configurar el mismo memcached para el simplesamlphp
+	replace_in_file "{{memcached_host}}" "memcached" "$PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/config/config.php"
 
     #Publicar en Apache
     replace_in_file '{{PORTAL_PATH}}' "$PORTAL_CORE_PATH" "/etc/apache2/sites-enabled/portal.conf"
