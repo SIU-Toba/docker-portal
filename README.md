@@ -21,13 +21,12 @@ docker-compose up
 ```
 * Navegar hacia <http://localhost:5000>
 
-
 ## Notas
 
  * En MacOSX o Windows reemplazar localhost por la ip de boot2docker: `boot2docker ip`
  * Para volver a ejecutar la instalación, borrar el archivo `INSTALLED` y ejecutar nuevamente `docker-compose up`
  * Se puede modificar el puerto en el `docker-composer.yml`
- 
+
 
 ## Build
 Hay un archivo `portal.sh` que contiene el script de instalación del portal, ante cualquier cambio a este script (o al Dockerfile), ejecutar lo siguiente para re-generar la imagen 
