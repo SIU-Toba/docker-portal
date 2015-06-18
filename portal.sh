@@ -1,5 +1,5 @@
 #!/bin/bash
-#Se espera que haya un volumen compartido con el codigo en /var/local/portal
+#Se espera que haya un volumen compartido con el codigo en /var/local/portal-core
 
 function replace_in_file {
 	sed "s/$1/$2/" "$3" > "$3.new"
@@ -7,7 +7,7 @@ function replace_in_file {
 }
 
 
-PORTAL_CORE_PATH=/var/local/portal/portal-core
+PORTAL_CORE_PATH=/var/local/portal-core
 if [ ! -d "$PORTAL_CORE_PATH/app" ]; then
 	echo "Falta cargar el volumen en $PORTAL_CORE_PATH"
 fi
@@ -59,7 +59,7 @@ if ! $PORTAL_INSTALLED; then
     ### TODO: Publicar vhost nuevo?
     #Publicar en DocumentRoot
     rm -rf /var/www/html
-    ln -s /var/local/portal/portal-core/web /var/www/html
+    ln -s $PORTAL_CORE_PATH/web /var/www/html
 
     ### TODO: Estas carpetas (y app/config) deberian estar fuera del codigo, asi se pueden montar en docker-data y separar dato de codigo
     #Permite guardar logs y cache

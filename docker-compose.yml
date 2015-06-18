@@ -9,7 +9,7 @@ data:
    - /var/lib/postgresql/data
 
 #TODO: esto deberia existir para mantener los configs, logs y cache accesibles desde el host
-#  - ./docker-data/instalacion:/var/local/portal/docker-data/instalacion
+#  - ./docker-data/portal-core:/var/local/docker-data/portal-core
 
 
 pg:
@@ -33,7 +33,7 @@ portal:
   volumes_from:
    - data
   volumes:
-   - portal-core/:/var/local/portal/portal-core
+   - portal-core/:/var/local/portal-core
   environment:
    SYMFONY_ENV: dev
    PORTAL_IDP_URL: http://localhost:4001/siu-arai-usuarios-idp
