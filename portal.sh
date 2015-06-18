@@ -2,8 +2,7 @@
 #Se espera que haya un volumen compartido con el codigo en /var/local/portal-core
 
 function replace_in_file {
-	sed "s/$1/$2/" "$3" > "$3.new"
-	mv "$3.new" "$3"
+	sed -i "s|$1|$2|" "$3"
 }
 
 
@@ -56,10 +55,8 @@ if ! $PORTAL_INSTALLED; then
 		sed -i "s|{{idp_url}}|$PORTAL_IDP_URL|" $PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php
 	fi
 
-    ### TODO: Publicar vhost nuevo?
-    #Publicar en DocumentRoot
-    rm -rf /var/www/html
-    ln -s $PORTAL_CORE_PATH/web /var/www/html
+    #Publicar en Apache
+    replace_in_file '{{PORTAL_PATH}}' "$PORTAL_CORE_PATH" "/etc/apache2/sites-enabled/portal.conf"
 
     ### TODO: Estas carpetas (y app/config) deberian estar fuera del codigo, asi se pueden montar en docker-data y separar dato de codigo
     #Permite guardar logs y cache
