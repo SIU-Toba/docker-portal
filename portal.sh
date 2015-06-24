@@ -59,14 +59,15 @@ if ! $PORTAL_INSTALLED; then
 	#Falta configurar el mismo memcached para el simplesamlphp
 	replace_in_file "{{memcached_host}}" "memcached" "$PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/config/config.php"
 
-    #Publicar en Apache
-    replace_in_file '{{PORTAL_PATH}}' "$PORTAL_CORE_PATH" "/etc/apache2/sites-enabled/portal.conf"
-
-    ### TODO: Estas carpetas (y app/config) deberian estar fuera del codigo, asi se pueden montar en docker-data y separar dato de codigo
-    #Permite guardar logs y cache
-    chown -R www-data $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
-    #Permite al usuario HOST editar los archivos
-    chmod -R a+w $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
-
     touch $PORTAL_CORE_PATH/INSTALLED
 fi
+
+#Publicar en Apache
+replace_in_file '{{PORTAL_PATH}}' "$PORTAL_CORE_PATH" "/etc/apache2/sites-enabled/portal.conf"
+
+### TODO: Estas carpetas (y app/config) deberian estar fuera del codigo, asi se pueden montar en docker-data y separar dato de codigo
+#Permite guardar logs y cache
+chown -R www-data $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
+#Permite al usuario HOST editar los archivos
+chmod -R a+w $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
+
