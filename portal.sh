@@ -71,3 +71,4 @@ chown -R www-data $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
 #Permite al usuario HOST editar los archivos
 chmod -R a+w $PORTAL_CORE_PATH/var/cache $PORTAL_CORE_PATH/var/logs
 
+echo "cd ${PORTAL_CORE_PATH};" >> /root/.bashrc
