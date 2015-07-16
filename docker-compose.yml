@@ -37,5 +37,6 @@ portal:
   environment:
    SYMFONY_ENV: dev
    PORTAL_IDP_URL: http://localhost:4001/idp
+   MAPUCHE_URL: http://localhost:4004/mapuche
 
 
