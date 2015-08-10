@@ -61,6 +61,11 @@ if ! $PORTAL_INSTALLED; then
         replace_in_file "mapuche.api.client.url: 'https://mapuche.unq.edu.ar/siu/mapuche/rest/'"  "mapuche.api.client.url: '$MAPUCHE_URL'"  "$PATH_PARAMETERS"
 	fi
 
+    #Si se le pasa USUARIOS_URL, lo registra
+    if [ ! -z "$USUARIOS_URL" ]; then
+        replace_in_file "usuarios.api.client.url: 'https://usuarios.unq.edu.ar/rest/'"  "usuarios.api.client.url: '$USUARIOS_URL'"  "$PATH_PARAMETERS"
+    fi
+
 	#Falta configurar el mismo memcached para el simplesamlphp
 	replace_in_file "{{memcached_host}}" "memcached" "$PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/config/config.php"
 
