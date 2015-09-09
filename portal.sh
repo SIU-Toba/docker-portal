@@ -49,8 +49,6 @@ if ! $PORTAL_INSTALLED; then
     ./console doctrine:database:create
     ./console doctrine:schema:update --force
     ./console assetic:dump
-    ./console cache:clear --env=prod
-    ./console cache:clear --env=dev
     
 	#Si se le pasa PORTAL_IDP_URL, registra esa url como IDP
 	if [ ! -z "$PORTAL_IDP_URL" ]; then
@@ -70,6 +68,9 @@ if ! $PORTAL_INSTALLED; then
 
 	#Falta configurar el mismo memcached para el simplesamlphp
 	replace_in_file "{{memcached_host}}" "memcached" "$PORTAL_CORE_PATH/vendor/simplesamlphp/simplesamlphp/config/config.php"
+
+    ./console cache:clear --env=prod
+    ./console cache:clear --env=dev
 
     touch $PORTAL_CORE_PATH/INSTALLED
 fi
