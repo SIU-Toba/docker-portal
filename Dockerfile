@@ -33,9 +33,5 @@ RUN apt-get update \
     && rm -r /var/lib/apt/lists/*
 
 
-COPY portal.sh /entrypoint.d/
-
-COPY portal.conf /etc/apache2/sites-enabled/portal.conf
-
-RUN chmod +x /entrypoint.d/*.sh
+#RUN chmod +x /entrypoint.d/*.sh
 

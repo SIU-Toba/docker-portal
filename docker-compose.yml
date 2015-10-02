@@ -2,7 +2,7 @@
 
 data:
   image: postgres:9.4
-  command: true
+  command: "true"
   volumes:
 #Descomentar para publicar postgres en una carpeta del host (y sobrevivir a la eliminacion del container)
 #   - ./docker-data/pgdata:/var/lib/postgresql/data
@@ -23,8 +23,9 @@ pg:
 memcached:
   image: memcached:latest
 
-portal:
+portal-core:
   image: siutoba/docker-portal:latest
+  container_name: portal-core
   links:
    - memcached
    - pg
@@ -33,10 +34,15 @@ portal:
   volumes_from:
    - data
   volumes:
-   - portal-core/:/var/local/portal-core
+   - ./portal-core/:/var/local/portal-core
   environment:
-   SYMFONY_ENV: dev
-   PORTAL_IDP_URL: http://localhost:4001/idp
-   MAPUCHE_URL: http://localhost:4004/mapuche
+   DOCKER_WEB_SCRIPT           : /var/local/portal-core/bin/docker-instalar
+   PORTAL_DB_HOST              : pg
+   PORTAL_DB_NAME              : portal
+   PORTAL_DB_PORT              : 5432
+   PORTAL_DB_USERNAME          : postgres
+   PORTAL_DB_PASSWORD          : postgres
+   PORTAL_MEMCACHED_HOST       : memcached
+
 
 
