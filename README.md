@@ -34,4 +34,3 @@ Hay un archivo `portal.sh` que contiene el script de instalación del portal, an
 docker build -t="siutoba/docker-portal" .
 ```
 Una vez hecho el push a github automáticamente se va a actualizar la imagen en el índice de [hub.docker.com](hub.docker.com)
-
