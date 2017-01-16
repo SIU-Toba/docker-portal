@@ -15,7 +15,8 @@ RUN cd /tmp/ && \
 	wget http://pecl.php.net/get/memcache-2.2.7.tgz && \
 	tar zxvf memcache-2.2.7.tgz
 
-RUN	mv /tmp/memcache-2.2.7 /usr/src/php/ext/memcache && \
+RUN	mkdir -p /usr/src/php/ext && \
+	mv /tmp/memcache-2.2.7 /usr/src/php/ext/memcache && \
 	docker-php-ext-install memcache
 
 RUN apt-get remove -y libldap2-dev libgmp-dev zlib1g-dev libicu-dev g++ libssl-dev libc-client2007e-dev libkrb5-dev libmemcached-dev zlib1g-dev libncurses5-dev php-pear \
