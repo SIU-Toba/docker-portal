@@ -13,9 +13,8 @@ RUN apt-get update \
     && npm install -g less 
 
 
-
 RUN cd /tmp/ && \
-    curl -O http://pecl.php.net/get/memcache-2.2.7.tgz && \
+    curl -O https://pecl.php.net/get/memcache-2.2.7.tgz && \
     tar zxvf memcache-2.2.7.tgz && \
     mv memcache-2.2.7 /usr/src/php/ext/memcache && \
     docker-php-ext-install memcache
