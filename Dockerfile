@@ -3,17 +3,12 @@ MAINTAINER smarconi@siu.edu.ar
 
 
 RUN apt-get update \
-	&& apt-get install -y nodejs npm \
-	&& apt-get install -y libldap2-dev libgmp-dev zlib1g-dev libicu-dev g++ \
+	&& apt-get install -y zlib1g-dev libicu-dev g++ \
 	&& apt-get install -y libssl-dev libc-client2007e-dev libkrb5-dev \
-	&& apt-get install -y php-pear libmemcached-dev zlib1g-dev libncurses5-dev \
+	&& apt-get install -y php-pear libmemcached-dev libncurses5-dev \
 
     && docker-php-ext-install intl \
 	&& docker-php-ext-install pdo_mysql \
-
-  	&& ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
-    && docker-php-ext-configure gmp --with-gmp=/usr/include/x86_64-linux-gnu \
-    && docker-php-ext-install gmp \
 
 	&& docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
 	&& docker-php-ext-install imap \
