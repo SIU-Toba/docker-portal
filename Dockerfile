@@ -11,13 +11,12 @@ RUN apt-get update \
 	&& docker-php-ext-install imap \
 
     && npm install -g less 
-
-
 RUN cd /tmp/ && \
-    curl -O https://pecl.php.net/get/memcache-2.2.7.tgz && \
-    tar zxvf memcache-2.2.7.tgz && \
-    mv memcache-2.2.7 /usr/src/php/ext/memcache && \
-    docker-php-ext-install memcache
+	wget http://pecl.php.net/get/memcache-2.2.7.tgz && \
+	tar zxvf memcache-2.2.7.tgz
+
+RUN	mv /tmp/memcache-2.2.7 /usr/src/php/ext/memcache && \
+	docker-php-ext-install memcache
 
 RUN apt-get remove -y libldap2-dev libgmp-dev zlib1g-dev libicu-dev g++ libssl-dev libc-client2007e-dev libkrb5-dev libmemcached-dev zlib1g-dev libncurses5-dev php-pear \
     && rm -r /var/lib/apt/lists/*
